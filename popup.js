@@ -14,13 +14,37 @@ $(document).ready(function(){
 			console.log("settings saved");
 		});
 	}
-
+	
+	function isValidCity(cityName){
+		
+		var isValid;
+		var xhttp = new XMLHttpRequest();
+		
+		var url = "http://api.openweathermap.org/data/2.5/weather?q="+cityName+"&APPID="+API_KEY;
+		console.log(url);
+		xhttp.onreadystatechange = function() {
+			if(xhttp.readyState == 4)
+			{
+				if(xhttp.status == 400 || xhttp.status == 404){
+					isValid = false;
+				} else if (xhttp.status == 200) {
+					isValid = true;
+				}
+			}
+			
+		}
+		
+		xhttp.open("GET",url,false);
+		xhttp.send();
+		return isValid;
+			
+	}
+	
+	
 	function getCities() {
 		clearCityList();
 		chrome.storage.local.get('userCities', function(data) {
 			cities = data.userCities;
-
-			
 			for(var i = 0;i<cities.length;i++){
 
 				var currentcity = cities[i];
@@ -30,8 +54,8 @@ $(document).ready(function(){
 
 				var url = "http://api.openweathermap.org/data/2.5/weather?q="+cities[i]+"&APPID="+API_KEY;
 				xhttp.onreadystatechange = function(){
-					if(xhttp.readyState == 4 && xhttp.status == 200){
 
+					if(xhttp.readyState == 4 && xhttp.status == 200){
 						data = JSON.parse(xhttp.response);
 						var description = data.weather[0].description;
 						var imgsrc = "http://openweathermap.org/img/w/"+data.weather[0].icon+'.png';
@@ -57,9 +81,14 @@ $(document).ready(function(){
 	$("#button").click(function() {
 
 		var city = $("#field").val();
-		cities.push(city);
-		saveChanges();
-		getCities();
+
+		if (isValidCity(city)) {
+			cities.push(city);
+			saveChanges();
+			getCities();
+		} else {
+			$("#field").val("INVALID CITY!");
+		}
 		
 	});
 	
