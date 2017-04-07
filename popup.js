@@ -3,11 +3,20 @@ $(document).ready(function(){
 	var API_KEY = "6024458a4f024f503e13a1c35b7c409f"
 	var cities = [];
 	
-
-	function getCities() {
+	function clearCityList(){
 		if($('#citylist').children().length>0){
 			$('#citylist').empty();
 		}
+	}
+	
+	function saveChanges() {
+		chrome.storage.local.set({'userCities':cities},function() {
+			console.log("settings saved");
+		});
+	}
+
+	function getCities() {
+		clearCityList();
 		chrome.storage.local.get('userCities', function(data) {
 			cities = data.userCities;
 
@@ -29,50 +38,45 @@ $(document).ready(function(){
 						
 
 						
-						$("#citylist").append('<div>'+currentcity+'-'+description+'</div><img src="'+imgsrc+'"/>');
+						$("#citylist").append('<div>'+currentcity+'-'+description+'</div><img src="'+imgsrc+'"/><input type="button" id="rmel" value="remove" >');
 
 
 					}
 				}
 						
-				
-				
-				
 				xhttp.open("GET",url,false);
 				xhttp.send();
-			
-
-					
-				
+	
 			}
 		});
 	}
 	
 	getCities();
 	
-	function saveChanges() {
-		chrome.storage.local.set({'userCities':cities},function() {
-			console.log("settings saved");
-		});
-	}
 	
 	$("#button").click(function() {
-		
-		
+
 		var city = $("#field").val();
 		cities.push(city);
 		saveChanges();
 		getCities();
 		
-		
-
-		
-
-
-	
 	});
 	
+	$("#citylist").on('click','#rmel',function() {
+		var c = $(this).prev().prev().html();
+		var cityRemoved = c.split("-")[0];
+		console.log(cityRemoved);
+		var index = cities.indexOf(cityRemoved);
+		if(index > -1) {
+			cities.splice(index,1);
+		}
+		saveChanges();
+		getCities();
+		
+	});
 	
+
 	
 	
 	
