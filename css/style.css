@@ -1,0 +1,20 @@
+
+#name{
+	background:lightBlue;
+	border: 20px;
+	margin: 5px;
+	font-size: 16px;
+
+}
+	
+#tempConvert{
+	padding: 0;
+	border:none;
+	background:none;
+	display:block;
+	margin: 10px;
+}
+
+#tempConvert:hover {
+	text-decoration:underline;
+}
