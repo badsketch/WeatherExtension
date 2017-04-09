@@ -73,10 +73,15 @@ $(document).ready(function(){
 						var imgsrc = "http://openweathermap.org/img/w/"+data.weather[0].icon+'.png';
 						var cityName = data.name;
 
-						$("#citylist").append('<div id="name">'+cityName+'</div> \
-						<div class="temp">'+tempMin+'|'+tempMax+'</div>\
-						<div id="info" >'+description+'</div><img id = "hi1" src="'+imgsrc+'"/> \
-						<input type="button" id="rmel" value="remove" >');
+						$("#citylist").append(
+						'<div id = "cityBlock">\
+							<span id ="rmel" >&#10006</span>\
+							<img id = "weatherIcon" src="'+imgsrc+'"/> \
+							<div id="name">'+cityName+'</div> \
+							<div class="temp">'+tempMin+'|'+tempMax+'</div>\
+						<div id="info" >'+description+'</div> \
+						 \
+						</div>');
 
 
 					}
@@ -109,13 +114,13 @@ $(document).ready(function(){
 	});
 	
 	$("#citylist").on('click','#rmel',function() {
-		var cityRemoved = $(this).prev().prev().prev().html();
+		var cityRemoved = $(this).prev().prev().prev().prev().html();
 		//var cityRemoved = c.split("-")[0];
 		console.log(cityRemoved);
 		var index = cities.indexOf(cityRemoved);
 		if(index > -1) {
-			cities.splice(index,1);
 		}
+			cities.splice(index,1);
 		saveChanges();
 		getCities();
 		
@@ -124,34 +129,37 @@ $(document).ready(function(){
 	
 	
 	$("#tempConvert").click(function() {
-		var unit = $(this).val();
-		if(unit == "celsius")
-		{
-			$(".temp").each(function() {
-				//grab min and max values by splitting
+		if($(this).next().children().length > 1){
+				var unit = $(this).val();
+				if(unit == "celsius")
+				{
+					$(".temp").each(function() {
+						//grab min and max values by splitting
 
-				var newMin = $(this).text().split("|")[0];
-				var newMax = $(this).text().split("|")[1];
+						var newMin = $(this).text().split("|")[0];
+						var newMax = $(this).text().split("|")[1];
 
-				var cMin = fahr2cel(newMin);
-				var cMax = fahr2cel(newMax);
-				$(this).text(cMin + "|"+cMax);
-			});
-			$(this).val("fahrenheit");
-		} else{
-			$(".temp").each(function() {
-				//grab min and max values by splitting
+						var cMin = fahr2cel(newMin);
+						var cMax = fahr2cel(newMax);
+						$(this).text(cMin + "|"+cMax);
+					});
+					$(this).val("fahrenheit");
+				} else{
+					$(".temp").each(function() {
+						//grab min and max values by splitting
 
-				var newMin = $(this).text().split("|")[0];
-				var newMax = $(this).text().split("|")[1];
+						var newMin = $(this).text().split("|")[0];
+						var newMax = $(this).text().split("|")[1];
 
-				var fMin = cel2fahr(newMin);
-				var fMax = cel2fahr(newMax);
-				$(this).text(fMin + "|"+fMax);
-			});
-			$(this).val("celsius");
+						var fMin = cel2fahr(newMin);
+						var fMax = cel2fahr(newMax);
+						$(this).text(fMin + "|"+fMax);
+					});
+					$(this).val("celsius");
 		
-		}
+			}
+		} 
+
 	});
 		
 		

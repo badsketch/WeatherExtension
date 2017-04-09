@@ -1,20 +1,44 @@
 
-#name{
+div {
+}
+
+#cityBlock{
 	background:lightBlue;
 	border: 20px;
 	margin: 5px;
-	font-size: 16px;
 
 }
+
+
+#button {
+	float:right;
+}
+
+#name {
+		font-size: 16px;
+		font-weight:bold;
+}
 	
+
 #tempConvert{
-	padding: 0;
+	padding: 5px;
 	border:none;
 	background:none;
 	display:block;
-	margin: 10px;
 }
 
 #tempConvert:hover {
 	text-decoration:underline;
+}
+
+#rmel{
+	cursor: pointer;
+	float:right;
+	display:inline-block;
+	padding:2px 5px;
+
+}
+
+#weatherIcon{
+	float:left;
 }

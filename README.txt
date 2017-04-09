@@ -5,4 +5,5 @@ Enter a city and extension will grab weather description, icon from the api and 
 TODO
 x-actually allow removal of saved cities
 x-output temperature information with option for metric
-o-improve css appearance
+x-improve css appearance
+o-fix css so names larger than width of popup won't cause issues
