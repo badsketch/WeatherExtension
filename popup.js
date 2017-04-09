@@ -61,8 +61,11 @@ $(document).ready(function(){
 				
 				
 				var xhttp = new XMLHttpRequest();
-
-				var url = "http://api.openweathermap.org/data/2.5/weather?q="+cities[i]+"&APPID="+API_KEY+'&units=imperial';
+				var tempUnit = "imperial";
+				if ($('#tempConvert').val() == "fahrenheit"){
+					tempUnit = "metric";
+				}
+				var url = "http://api.openweathermap.org/data/2.5/weather?q="+cities[i]+"&APPID="+API_KEY+"&units="+tempUnit;
 				xhttp.onreadystatechange = function(){
 
 					if(xhttp.readyState == 4 && xhttp.status == 200){
@@ -75,7 +78,7 @@ $(document).ready(function(){
 
 						$("#citylist").append(
 						'<div id = "cityBlock">\
-							<span id ="rmel" >&#10006</span>\
+							<span id ="rmel" {cursor:pointer}>&#10006</span>\
 							<img id = "weatherIcon" src="'+imgsrc+'"/> \
 							<div id="name">'+cityName+'</div> \
 							<div class="temp">'+tempMin+'|'+tempMax+'</div>\
@@ -108,7 +111,8 @@ $(document).ready(function(){
 			saveChanges();
 			getCities();
 		} else {
-			$("#field").val("INVALID CITY!");
+			$("#field").val("INVALID CITY");
+
 		}
 		
 	});
@@ -129,7 +133,7 @@ $(document).ready(function(){
 	
 	
 	$("#tempConvert").click(function() {
-		if($(this).next().children().length > 1){
+		//if($(this).next().children().length > 0){
 				var unit = $(this).val();
 				if(unit == "celsius")
 				{
@@ -141,7 +145,7 @@ $(document).ready(function(){
 
 						var cMin = fahr2cel(newMin);
 						var cMax = fahr2cel(newMax);
-						$(this).text(cMin + "|"+cMax);
+						$(this).text(cMin +"|"+cMax);
 					});
 					$(this).val("fahrenheit");
 				} else{
@@ -153,12 +157,12 @@ $(document).ready(function(){
 
 						var fMin = cel2fahr(newMin);
 						var fMax = cel2fahr(newMax);
-						$(this).text(fMin + "|"+fMax);
+						$(this).text(fMin +"|"+fMax);
 					});
 					$(this).val("celsius");
 		
 			}
-		} 
+		//} 
 
 	});
 		
