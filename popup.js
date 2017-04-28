@@ -133,7 +133,7 @@ $(document).ready(function(){
 	
 	
 	$("#tempConvert").click(function() {
-		//if($(this).next().children().length > 0){
+
 				var unit = $(this).val();
 				if(unit == "celsius")
 				{
@@ -162,7 +162,7 @@ $(document).ready(function(){
 					$(this).val("celsius");
 		
 			}
-		//} 
+ 
 
 	});
 		
