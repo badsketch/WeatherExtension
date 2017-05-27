@@ -86,7 +86,23 @@ $(document).ready(function(){
 		clearCityList();
 		//retrieve user info saved in storage
 		//@callback builds div for each city
+		
+		// chrome.storage.local.get('userCities', function(data) {
+			// if (data.userCities == undefined){
+				// console.log("boohoo doesn't exist");
+				// saveChanges();
+			// } 
+			
+			
+		// });
+		
+		
 		chrome.storage.local.get('userCities', function(data) {
+			if (data.userCities == undefined){
+				console.log("boohoo doesn't exist");
+				saveChanges();
+			} 
+			
 			cities = data.userCities;
 			for(var i = 0;i<cities.length;i++){
 
